@@ -91,4 +91,22 @@ router.post("/login", async (req, res) => {
     token,
   });
 });
+
+// delete contact by id
+router.delete("/:id", auth, async (req, res) => {
+  const id = req.params.id;
+  try {
+    const result = await user.findByIdAndDelete({ _id: id });
+
+    res.status(200).json({
+      status: "ok",
+      result: result,
+    });
+  } catch (err) {
+    res.json({
+      message: err,
+    });
+  }
+});
+
 module.exports = router;

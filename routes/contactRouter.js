@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const contact = require("../model/contact");
+const auth = require("../middlewares/checkAuth");
 
 //add contact
 router.post("/", async (req, res) => {
@@ -56,7 +57,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // delete contact by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const id = req.params.id;
   try {
     const result = await contact.findByIdAndDelete({ _id: id });

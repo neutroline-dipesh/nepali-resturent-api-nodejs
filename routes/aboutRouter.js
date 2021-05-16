@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const about = require("../model/about");
+const auth = require("../middlewares/checkAuth");
 
 //add about
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const newAbout = new about({
     companyName: req.body.companyName,
     city: req.body.city,
@@ -61,7 +62,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // delete about by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const id = req.params.id;
   try {
     const result = await about.findByIdAndDelete({ _id: id });
@@ -78,7 +79,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 //update about
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
   const id = req.params.id;
 
   const newAbout = {

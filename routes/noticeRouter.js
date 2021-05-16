@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const notice = require("../model/notice");
+const auth = require("../middlewares/checkAuth");
 
 //add notice
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const newNotice = new notice({
     noticeTitle: req.body.noticeTitle,
     noticeBody: req.body.noticeBody,
@@ -54,7 +55,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // delete notice by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const id = req.params.id;
   try {
     const result = await notice.findByIdAndDelete({ _id: id });
@@ -71,7 +72,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 //update notice
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
   const id = req.params.id;
 
   const newNotice = {

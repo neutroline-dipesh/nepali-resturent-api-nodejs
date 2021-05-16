@@ -73,7 +73,7 @@ router.delete("/:id", auth, async (req, res) => {
 });
 
 //update time
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
   const id = req.params.id;
 
   const newTime = {
