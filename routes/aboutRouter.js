@@ -33,7 +33,7 @@ router.post("/", auth, async (req, res) => {
 //get all about
 router.get("/", async (req, res) => {
   try {
-    const result = await about.find();
+    const result = await about.find().sort({ $natural: -1 });
     res.status(200).json({
       status: "ok",
       data: result,

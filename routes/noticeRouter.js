@@ -26,7 +26,7 @@ router.post("/", auth, async (req, res) => {
 //get all notice
 router.get("/", async (req, res) => {
   try {
-    const result = await notice.find();
+    const result = await notice.find().sort({ $natural: -1 });
     res.status(200).json({
       status: "ok",
       data: result,

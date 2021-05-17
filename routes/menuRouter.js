@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const menu = require("../model/menu");
+const auth = require("../middlewares/checkAuth");
 
 //add new menu
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const newMenu = new menu({
     menu: req.body.menu,
   });
@@ -49,7 +50,7 @@ router.post("/menuItem/:id", (req, res) => {
 //get all menu
 router.get("/", async (req, res) => {
   try {
-    const result = await menu.find();
+    const result = await menu.find().sort({ $natural: -1 });
     res.status(200).json({
       status: "ok",
       data: result,
@@ -85,7 +86,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // delete menu
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const id = req.params.id;
   try {
     const result = await menu.findByIdAndDelete({ _id: id });
@@ -117,8 +118,8 @@ router.delete("/menuItem/:id", async (req, res) => {
   }
 });
 
-//update blogs
-router.patch("/:id", async (req, res) => {
+//update menu
+router.patch("/:id", auth, async (req, res) => {
   const id = req.params.id;
 
   const newMenu = {

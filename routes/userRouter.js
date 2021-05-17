@@ -92,6 +92,21 @@ router.post("/login", async (req, res) => {
   });
 });
 
+//get all user
+router.get("/", async (req, res) => {
+  try {
+    const result = await user.find().sort({ $natural: -1 });
+    res.status(200).json({
+      status: "ok",
+      data: result,
+    });
+  } catch (err) {
+    res.json({
+      message: err,
+    });
+  }
+});
+
 // delete contact by id
 router.delete("/:id", auth, async (req, res) => {
   const id = req.params.id;

@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
 //get all contact
 router.get("/", async (req, res) => {
   try {
-    const result = await contact.find();
+    const result = await contact.find().sort({ $natural: -1 });
     res.status(200).json({
       status: "ok",
       data: result,
